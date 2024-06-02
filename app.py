@@ -36,7 +36,8 @@ def form():
 
 def get_file_context(filename: str) -> str:
     """Получаем содержимое файла"""
-    with open(app.config.get('StoreDirectory') + filename, 'r', encoding='utf-8') as f:
+    path = os.path.join(app.config.get('StoreDirectory'),  filename)
+    with open(path, 'r', encoding='utf-8') as f:
         text = f.read()
 
     return text
@@ -44,7 +45,7 @@ def get_file_context(filename: str) -> str:
 
 def save_text_to_file(filename, text):
     """Сохраняем файл"""
-    path = os.path.abspath(app.config.get('StoreDirectory') + filename)
+    path = os.path.join(app.config.get('StoreDirectory'), filename)
     with open(path, 'wt', encoding="utf-8", newline='\n') as f:
         f.write(text)
 
@@ -63,4 +64,4 @@ def app_init():
 
 if __name__ == '__main__':
     app_init()
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=9182, debug=False)
